@@ -1,0 +1,1160 @@
+<!doctype html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+  
+  
+  
+  
+
+  
+    
+    
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+    
+    
+    <link href="//fonts.googleapis.com/css?family=Lato:300,300italic,400,400italic,700,700italic&subset=latin,latin-ext" rel="stylesheet" type="text/css">
+  
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
+
+
+  <meta name="keywords" content="Android,AOP,Aspectj," />
+
+
+
+
+
+
+
+
+  <link rel="shortcut icon" type="image/x-icon" href="/favicon.ico?v=5.1.0" />
+
+
+
+
+
+
+<meta name="description" content="先说一下AspectJX，它是一个基于AspectJ并在此基础上扩展出来可应用于Android开发平台的AOP框架，可作用于java源码，class文件及jar包，同时支持kotlin的应用。 使用方式直接引用github 如何使用 AspectJX是基于 gradle android插件1.5及以上版本设计使用的，如果你还在用1.3或者更低版本，请把版本升上去。   本使用说明是基于重构后的2.">
+<meta name="keywords" content="Android,AOP,Aspectj">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AspectJX 的使用">
+<meta property="og:url" content="https://lixiaoguo.github.io/2018/05/04/AspectJX-的使用/index.html">
+<meta property="og:site_name" content="李小果の博客">
+<meta property="og:description" content="先说一下AspectJX，它是一个基于AspectJ并在此基础上扩展出来可应用于Android开发平台的AOP框架，可作用于java源码，class文件及jar包，同时支持kotlin的应用。 使用方式直接引用github 如何使用 AspectJX是基于 gradle android插件1.5及以上版本设计使用的，如果你还在用1.3或者更低版本，请把版本升上去。   本使用说明是基于重构后的2.">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2018-05-04T10:25:18.297Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AspectJX 的使用">
+<meta name="twitter:description" content="先说一下AspectJX，它是一个基于AspectJ并在此基础上扩展出来可应用于Android开发平台的AOP框架，可作用于java源码，class文件及jar包，同时支持kotlin的应用。 使用方式直接引用github 如何使用 AspectJX是基于 gradle android插件1.5及以上版本设计使用的，如果你还在用1.3或者更低版本，请把版本升上去。   本使用说明是基于重构后的2.">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    sidebar: {"position":"left","display":"always"},
+    fancybox: true,
+    motion: true,
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="https://lixiaoguo.github.io/2018/05/04/AspectJX-的使用/"/>
+
+
+
+
+
+  <title> AspectJX 的使用 | 李小果の博客 </title>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+    
+  
+
+  <div class="container one-collumn sidebar-position-left page-post-detail ">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-meta ">
+  
+
+  <div class="custom-logo-site-title">
+    <a href="/"  class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <span class="site-title">李小果の博客</span>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+    
+      <p class="site-subtitle">朝闻道，夕死可矣</p>
+    
+</div>
+
+<div class="site-nav-toggle">
+  <button>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+    <span class="btn-bar"></span>
+  </button>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br />
+            
+            公益404
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-resume">
+          <a href="/resume.html" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-file"></i> <br />
+            
+            我的简历
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
+  <link itemprop="mainEntityOfPage" href="https://lixiaoguo.github.io/2018/05/04/AspectJX-的使用/">
+
+  <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <meta itemprop="name" content="Extends">
+    <meta itemprop="description" content="">
+    <meta itemprop="image" content="http://q.qlogo.cn/qqapp/1105879324/78D3D4AAF54CF2EA982CC63D8BE5E658/40">
+  </span>
+
+  <span style="display:none" itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+    <meta itemprop="name" content="李小果の博客">
+    <span style="display:none" itemprop="logo" itemscope itemtype="http://schema.org/ImageObject">
+      <img style="display:none;" itemprop="url image" alt="李小果の博客" src="">
+    </span>
+  </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+            
+            
+              
+                AspectJX 的使用
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-05-04T17:41:50+08:00">
+                2018-05-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2018/05/04/AspectJX-的使用/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/05/04/AspectJX-的使用/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+
+          
+          
+             <span id="/2018/05/04/AspectJX-的使用/" class="leancloud_visitors" data-flag-title="AspectJX 的使用">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数 </span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>先说一下AspectJX，它是一个基于AspectJ并在此基础上扩展出来可应用于Android开发平台的AOP框架，可作用于java源码，class文件及jar包，同时支持kotlin的应用。</p>
+<p><a href="https://github.com/HujiangTechnology/gradle_plugin_android_aspectjx" target="_blank" rel="noopener">使用方式直接引用github</a></p>
+<h2 id="如何使用"><a href="#如何使用" class="headerlink" title="如何使用"></a>如何使用</h2><blockquote>
+<p><strong>AspectJX</strong>是基于 gradle android插件1.5及以上版本设计使用的，如果你还在用1.3或者更低版本，请把版本升上去。</p>
+</blockquote>
+<blockquote>
+<p>本使用说明是基于重构后的2.0.0版本编写的，如需要查阅旧版本的README，请切换到对应的Tag。</p>
+</blockquote>
+<ul>
+<li><strong>插件引用</strong></li>
+</ul>
+<p>在项目根目录的build.gradle里依赖<strong>AspectJX</strong></p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">       classpath <span class="string">'com.hujiang.aspectjx:gradle-android-plugin-aspectjx:2.0.0'</span></span><br><span class="line">       &#125;</span><br></pre></td></tr></table></figure>
+<p>或者使用product目录下的jar包，在你的项目根目录下新建目录plugins，把product/gradle-android-plugin-aspectjx-2.0.0.jar拷贝到plugins，依赖jar包</p>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">dependencies &#123;</span><br><span class="line">        classpath fileTree(<span class="string">dir:</span><span class="string">'plugins'</span>, <span class="string">include:</span>[<span class="string">'*.jar'</span>])</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+<p><code>注意</code>:</p>
+<ol>
+<li>区别于旧版本，离线新版本不再需要依赖<code>org.aspectj:aspectjtools:1.8.+</code></li>
+<li><code>compile &#39;org.aspectj:aspectjrt:1.8.+&#39;</code> 必须添加到包含有AspectJ代码的module. <a href="https://github.com/HujiangTechnology/AspectJX-Demo/blob/master/library/build.gradle" target="_blank" rel="noopener">可以参考Demo</a></li>
+</ol>
+<ul>
+<li><strong>在app项目的build.gradle里应用插件</strong></li>
+</ul>
+<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">apply <span class="string">plugin:</span> <span class="string">'android-aspectjx'</span></span><br><span class="line"><span class="comment">//或者这样也可以</span></span><br><span class="line">apply <span class="string">plugin:</span> <span class="string">'com.hujiang.android-aspectjx'</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li><strong>AspectJX配置</strong></li>
+</ul>
+<p><strong>AspectJX</strong>默认会处理所有的二进制代码文件和库，为了提升编译效率及规避部分第三方库出现的编译兼容性问题，<strong>AspectJX</strong>提供<code>include</code>,<code>exclude</code>命令来过滤需要处理的文件及排除某些文件(包括class文件及jar文件)。</p>
+<blockquote>
+<p>注意：2.0.0版本之后旧版本的<code>includeJarFilter</code>和<code>excludeJarFilter</code>命令废弃，不再支持使用</p>
+</blockquote>
+<blockquote>
+<p>2.0.0版本的 <code>include</code>,<code>exclude</code>通过package路径匹配class文件及jar文件，不再支持通过jar物理文件路径匹配的方式，比如：</p>
+</blockquote>
+<p><strong>支持</strong></p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aspectjx &#123;</span><br><span class="line">/<span class="regexp">/排除所有package路径中包含`android.support`的class文件及库（jar文件）</span></span><br><span class="line"><span class="regexp">	exclude 'android.support'</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p><strong>不支持</strong></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">aspectjx</span> &#123;</span><br><span class="line">	<span class="attribute">excludeJarFilter</span> <span class="string">'universal-image-loader'</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">//或者</span><br><span class="line">aspectjx &#123;</span><br><span class="line">	<span class="attribute">exclude</span> <span class="string">'universal-image-loader'</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>支持*和</strong>匹配**</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">aspectjx &#123;</span><br><span class="line">/<span class="regexp">/忽略所有的class文件及jar文件，相当于AspectJX不生效</span></span><br><span class="line"><span class="regexp">	exclude '*'</span></span><br><span class="line"><span class="regexp">&#125;</span></span><br></pre></td></tr></table></figure>
+<p><strong>提供enabled 开关</strong></p>
+<p><code>enabled</code>默认为true，即默认<strong>AspectJX</strong>生效</p>
+<figure class="highlight puppet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">aspectjx</span> &#123;</span><br><span class="line">//关闭AspectJX功能</span><br><span class="line">	<span class="literal">enabled</span> <span class="keyword">false</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="常见问题"><a href="#常见问题" class="headerlink" title="常见问题"></a>常见问题</h2><ul>
+<li>问：<strong>AspectJX</strong>是否支持<code>*.aj</code>文件的编译?</li>
+</ul>
+<p>答： 不支持。目前<strong>AspectJX</strong>仅支持annotation的方式，具体可以参考<a href="https://github.com/HujiangTechnology/AspectJ-Demo" target="_blank" rel="noopener">支持kotlin代码织入的AspectJ Demo</a></p>
+<ul>
+<li>问：编译时会出现<code>can&#39;t determine superclass of missing type**</code>及其他编译错误怎么办</li>
+</ul>
+<p>答：大部分情况下把出现问题相关的class文件或者库（jar文件）过滤掉就可以搞定了</p>
+<h2 id="匹配表达式"><a href="#匹配表达式" class="headerlink" title="匹配表达式"></a>匹配表达式</h2><ul>
+<li>注解？ 类的全限定名字</li>
+</ul>
+<ol>
+<li>注解： 可选，类型上持有的注解，如@Deprecated</li>
+<li>类的全限定名: 必填，可以是任何类全限定名</li>
+</ol>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">注解？ 修饰符? 返回值类型 类型声明?方法名(参数列表) 异常列表？</span><br></pre></td></tr></table></figure>
+<ol>
+<li>注解：可选，方法上持有的注解，如@Deprecated；</li>
+<li>修饰符：可选，如public、protected；</li>
+<li>返回值类型：必填，可以是任何类型模式；“*”表示所有类型；</li>
+<li>类型声明：可选，可以是任何类型模式；</li>
+<li>方法名：必填，可以使用“*”进行模式匹配；</li>
+<li>参数列表：“()”表示方法没有任何参数；“(..)”表示匹配接受任意个参数的方法，“(..,java.lang.String)”表示匹配接受java.lang.String类型的参数结束，且其前边可以接受有任意个参数的方法；“(java.lang.String,..)” 表示匹配接受java.lang.String类型的参数开始，且其后边可以接受任意个参数的方法；“(*,java.lang.String)” 表示匹配接受java.lang.String类型的参数结束，且其前边接受有一个任意类型参数的方法；</li>
+<li>异常列表：可选，以“throws 异常全限定名列表”声明，异常全限定名列表如有多个以“，”分割，如throws java.lang.IllegalArgumentException, java.lang.ArrayIndexOutOfBoundsException。</li>
+</ol>
+<h3 id="切入点组合方式"><a href="#切入点组合方式" class="headerlink" title="切入点组合方式"></a>切入点组合方式</h3><figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&amp;&amp;, ||, !</span></span><br></pre></td></tr></table></figure>
+<h3 id="execution"><a href="#execution" class="headerlink" title="execution"></a>execution</h3><ul>
+<li><p><code>public * *(..)</code></p>
+<blockquote>
+<p>任何公共方法的执行</p>
+</blockquote>
+</li>
+<li><p><code>* cn.javass..IPointcutService.*()</code></p>
+<blockquote>
+<p>cn.javass包及所有子包下IPointcutService接口中的任何无参方法</p>
+</blockquote>
+</li>
+<li><p><code>* cn.javass..*.*(..)</code></p>
+<blockquote>
+<p>cn.javass包及所有子包下任何类的任何方法</p>
+</blockquote>
+</li>
+<li><p><code>* cn.javass..IPointcutService.*(*)</code></p>
+<blockquote>
+<p>cn.javass包及所有子包下IPointcutService接口的任何只有一个参数方法</p>
+</blockquote>
+</li>
+<li><p><code>* (!cn.javass..IPointcutService+).*(..)</code></p>
+<blockquote>
+<p>非“cn.javass包及所有子包下IPointcutService接口及子类型”的任何方法</p>
+</blockquote>
+</li>
+<li><p><code>* cn.javass..IPointcut*.test*(java.util.Date)</code></p>
+<blockquote>
+<p>cn.javass包及所有子包下IPointcut前缀类型的的以test开头的只有一个参数类型为java.util.Date的方法，注意该匹配是根据方法签名的参数类型进行匹配的，而不是根据执行时传入的参数类型决定的 如定义方法：public void test(Object obj);即使执行时传入java.util.Date，也不会匹配的；</p>
+</blockquote>
+</li>
+<li><p><code>* cn.javass..IPointcut*.test*(..) throws IllegalArgumentException, ArrayIndexOutOfBoundsException</code></p>
+<blockquote>
+<p>cn.javass包及所有子包下IPointcut前缀类型的的任何方法，且抛出IllegalArgumentException和ArrayIndexOutOfBoundsException异常</p>
+</blockquote>
+</li>
+<li><p><code>* (cn.javass..IPointcutService+ &amp;&amp; java.io.Serializable+).*(..)</code></p>
+<blockquote>
+<p>任何实现了cn.javass包及所有子包下IPointcutService接口和java.io.Serializable接口的类型的任何方法</p>
+</blockquote>
+</li>
+<li><p><a href="mailto:`@java.lang.Deprecated" target="_blank" rel="noopener">`@java.lang.Deprecated</a> <em> </em>(..)`</p>
+<blockquote>
+<p>任何持有@java.lang.Deprecated注解的方法</p>
+</blockquote>
+</li>
+<li><p><a href="mailto:`@java.lang.Deprecated" target="_blank" rel="noopener">`@java.lang.Deprecated</a> @cn.javass..Secure <em> </em>(..)`</p>
+<blockquote>
+<p>任何持有@java.lang.Deprecated和@cn.javass..Secure注解的方法</p>
+</blockquote>
+</li>
+<li><p><code>@(java.lang.Deprecated || cn.javass..Secure) * *(..)</code></p>
+<blockquote>
+<p>任何持有@java.lang.Deprecated或@ cn.javass..Secure注解的方法</p>
+</blockquote>
+</li>
+<li><p><code>(@cn.javass..Secure *) *(..)</code></p>
+<blockquote>
+<p>任何返回值类型持有@cn.javass..Secure的方法</p>
+</blockquote>
+</li>
+<li><p><code>* (@cn.javass..Secure *).*(..)</code> 任何定义方法的类型持有@cn.javass..Secure的方法</p>
+</li>
+<li><p><code>* *(@cn.javass..Secure (*) , @cn.javass..Secure (*))</code></p>
+<blockquote>
+<p>任何签名带有两个参数的方法，且这个两个参数都被@ Secure标记了，如public void test(@Secure String str1,@Secure String str1);</p>
+</blockquote>
+</li>
+<li><p><code>* *((@ cn.javass..Secure *))或*(@ cn.javass..Secure *)</code></p>
+<blockquote>
+<p>任何带有一个参数的方法，且该参数类型持有@ cn.javass..Secure；如public void test(Model model);且Model类上持有@Secure注解</p>
+</blockquote>
+</li>
+<li><p><code>* *(@cn.javass..Secure (@cn.javass..Secure *) ,@ cn.javass..Secure (@cn.javass..Secure *))</code></p>
+<blockquote>
+<p>任何带有两个参数的方法，且这两个参数都被@ cn.javass..Secure标记了；且这两个参数的类型上都持有@ cn.javass..Secure;</p>
+</blockquote>
+</li>
+<li><p><code>* *(java.util.Map&lt;cn.javass..Model, cn.javass..Model&gt;, ..)</code></p>
+<blockquote>
+<p>任何带有一个java.util.Map参数的方法，且该参数类型是以&lt; cn.javass..Model, cn.javass..Model &gt;为泛型参数；注意只匹配第一个参数为java.util.Map,不包括子类型；如public void test(HashMap&lt;Model, Model&gt; map, String str);将不匹配，必须使用“<em> </em>(java.util.HashMap&lt;cn.javass..Model,cn.javass..Model&gt;, ..)”进行匹配；而public void test(Map map, int i);也将不匹配，因为泛型参数不匹配</p>
+</blockquote>
+</li>
+<li><p><code>* *(java.util.Collection&lt;@cn.javass..Secure *&gt;)</code></p>
+<blockquote>
+<p>任何带有一个参数（类型为java.util.Collection）的方法，且该参数类型是有一个泛型参数，该泛型参数类型上持有@cn.javass..Secure注解； 如public void test(Collection collection);Model类型上持有@cn.javass..Secure</p>
+</blockquote>
+</li>
+<li><p><code>* *(java.util.Set&lt;? extends HashMap&gt;)</code></p>
+<blockquote>
+<p>任何带有一个参数的方法，且传入的参数类型是有一个泛型参数，该泛型参数类型继承与HashMap；</p>
+</blockquote>
+</li>
+<li><p><code>* *(java.util.List&lt;? super HashMap&gt;)</code></p>
+<blockquote>
+<p>任何带有一个参数的方法，且传入的参数类型是有一个泛型参数，该泛型参数类型是HashMap的基类型；如public voi test(Map map)；</p>
+</blockquote>
+</li>
+<li><p><code>* *(*&lt;@cn.javass..Secure *&gt;)</code></p>
+<blockquote>
+<p>任何带有一个参数的方法，且该参数类型是有一个泛型参数，该泛型参数类型上持有@cn.javass..Secure注解；</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="within"><a href="#within" class="headerlink" title="within"></a>within</h3><ul>
+<li><p><code>within(cn.javass..*)</code></p>
+<blockquote>
+<p>cn.javass包及子包下的任何方法执行</p>
+</blockquote>
+</li>
+<li><p><code>within(cn.javass..IPointcutService+)</code></p>
+<blockquote>
+<p>cn.javass包或所有子包下IPointcutService类型及子类型的任何方法</p>
+</blockquote>
+</li>
+<li><p><code>within(@cn.javass..Secure *)</code></p>
+<blockquote>
+<p>持有cn.javass..Secure注解的任何类型的任何方法必须是在目标对象上声明这个注解，在接口上声明的对它不起作用</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="this"><a href="#this" class="headerlink" title="this"></a>this</h3><blockquote>
+<p>使用“this(类型全限定名)”匹配当前AOP代理对象类型的执行方法；注意是AOP代理对象的类型匹配，这样就可能包括引入接口方法也可以匹配；注意this中使用的表达式必须是类型全限定名，不支持通配符；</p>
+</blockquote>
+<ul>
+<li><p><code>this(cn.javass.spring.chapter6.service.IPointcutService)</code></p>
+<blockquote>
+<p>当前AOP对象实现了 IPointcutService接口的任何方法</p>
+</blockquote>
+</li>
+<li><p><code>this(cn.javass.spring.chapter6.service.IIntroductionService)</code></p>
+<blockquote>
+<p>当前AOP对象实现了 IIntroductionService接口的任何方法 也可能是引入接口</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="target"><a href="#target" class="headerlink" title="target"></a>target</h3><blockquote>
+<p>使用“target(类型全限定名)”匹配当前目标对象类型的执行方法；注意是目标对象的类型匹配，这样就不包括引入接口也类型匹配；注意target中使用的表达式必须是类型全限定名，不支持通配符；</p>
+</blockquote>
+<ul>
+<li><p><code>target(cn.javass.spring.chapter6.service.IPointcutService)</code></p>
+<blockquote>
+<p>当前目标对象（非AOP对象）实现了 IPointcutService接口的任何方法</p>
+</blockquote>
+</li>
+<li><p><code>target(cn.javass.spring.chapter6.service.IIntroductionService)</code></p>
+<blockquote>
+<p>当前目标对象（非AOP对象） 实现了IIntroductionService 接口的任何方法 不可能是引入接口</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="args"><a href="#args" class="headerlink" title="args"></a>args</h3><blockquote>
+<p>使用“args(参数类型列表)”匹配当前执行的方法传入的参数为指定类型的执行方法；注意是匹配传入的参数类型，不是匹配方法签名的参数类型；参数类型列表中的参数必须是类型全限定名，通配符不支持；args属于动态切入点，这种切入点开销非常大，非特殊情况最好不要使用；</p>
+</blockquote>
+<ul>
+<li><code>args (java.io.Serializable,..)</code></li>
+</ul>
+<blockquote>
+<p>任何一个以接受“传入参数类型为 java.io.Serializable” 开头，且其后可跟任意个任意类型的参数的方法执行，args指定的参数类型是在运行时动态匹配的</p>
+</blockquote>
+<h3 id="within-1"><a href="#within-1" class="headerlink" title="@within"></a>@within</h3><ul>
+<li><p><code>@within cn.javass.spring.chapter6.Secure)</code></p>
+<blockquote>
+<p>任何目标对象对应的类型持有Secure注解的类方法； 必须是在目标对象上声明这个注解，在接口上声明的对它不起作用</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="target-1"><a href="#target-1" class="headerlink" title="@target"></a>@target</h3><ul>
+<li><p><code>@target (cn.javass.spring.chapter6.Secure)</code></p>
+<blockquote>
+<p>任何目标对象持有Secure注解的类方法； 必须是在目标对象上声明这个注解，在接口上声明的对它不起作用</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="args-1"><a href="#args-1" class="headerlink" title="@args"></a>@args</h3><ul>
+<li><p><code>@args (cn.javass.spring.chapter6.Secure)</code></p>
+<blockquote>
+<p>任何一个只接受一个参数的方法，且方法运行时传入的参数持有注解 cn.javass.spring.chapter6.Secure；动态切入点，类似于arg指示符；</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="annotation"><a href="#annotation" class="headerlink" title="@annotation"></a>@annotation</h3><ul>
+<li><p><code>@annotation(cn.javass.spring.chapter6.Secure )</code></p>
+<blockquote>
+<p>当前执行方法上持有注解 cn.javass.spring.chapter6.Secure将被匹配</p>
+</blockquote>
+</li>
+</ul>
+<h3 id="reference-pointcut-引用其他命名切入点"><a href="#reference-pointcut-引用其他命名切入点" class="headerlink" title="reference pointcut 引用其他命名切入点"></a>reference pointcut 引用其他命名切入点</h3><figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">@Pointcut</span>(value=<span class="string">"bean(*Service)"</span>)</span><br><span class="line">private void pointcut1()&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">@Pointcut</span>(value=<span class="string">"@args(cn.javass.sprint.Secure)"</span>)</span><br><span class="line">private void pointcut2()&#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="variable">@Before</span>(value=<span class="string">"pointcut1() &amp;&amp; pointcut2()"</span>)</span><br><span class="line">public void referencePointcutTest1(JoinPoint jp) &#123;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="通知参数"><a href="#通知参数" class="headerlink" title="通知参数"></a>通知参数</h3><blockquote>
+<p>JointPoint(Around通知是ProceedingJoinPoint)</p>
+</blockquote>
+<ul>
+<li>JoinPoint</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> org.aspectj.lang;  </span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.reflect.SourceLocation;  </span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">JoinPoint</span> </span>&#123;  </span><br><span class="line">    <span class="function">String <span class="title">toString</span><span class="params">()</span></span>;         <span class="comment">//连接点所在位置的相关信息  </span></span><br><span class="line">    <span class="function">String <span class="title">toShortString</span><span class="params">()</span></span>;     <span class="comment">//连接点所在位置的简短相关信息  </span></span><br><span class="line">    <span class="function">String <span class="title">toLongString</span><span class="params">()</span></span>;     <span class="comment">//连接点所在位置的全部相关信息  </span></span><br><span class="line">    <span class="function">Object <span class="title">getThis</span><span class="params">()</span></span>;         <span class="comment">//返回AOP代理对象  </span></span><br><span class="line">    <span class="function">Object <span class="title">getTarget</span><span class="params">()</span></span>;       <span class="comment">//返回目标对象  </span></span><br><span class="line">    Object[] getArgs();       <span class="comment">//返回被通知方法参数列表  </span></span><br><span class="line">    <span class="function">Signature <span class="title">getSignature</span><span class="params">()</span></span>;  <span class="comment">//返回当前连接点签名  </span></span><br><span class="line">    <span class="function">SourceLocation <span class="title">getSourceLocation</span><span class="params">()</span></span>;<span class="comment">//返回连接点方法所在类文件中的位置  </span></span><br><span class="line">    <span class="function">String <span class="title">getKind</span><span class="params">()</span></span>;        <span class="comment">//连接点类型  </span></span><br><span class="line">    <span class="function">StaticPart <span class="title">getStaticPart</span><span class="params">()</span></span>; <span class="comment">//返回连接点静态部分  </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>ProceedingJoinPoint</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">ProceedingJoinPoint</span> <span class="keyword">extends</span> <span class="title">JoinPoint</span> </span>&#123;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">proceed</span><span class="params">()</span> <span class="keyword">throws</span> Throwable</span>;  </span><br><span class="line">    <span class="function"><span class="keyword">public</span> Object <span class="title">proceed</span><span class="params">(Object[] args)</span> <span class="keyword">throws</span> Throwable</span>;  </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>JoinPoint.StaticPart</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">interface</span> <span class="title">StaticPart</span> </span>&#123;  </span><br><span class="line"><span class="function">Signature <span class="title">getSignature</span><span class="params">()</span></span>;    <span class="comment">//返回当前连接点签名  </span></span><br><span class="line"><span class="function">String <span class="title">getKind</span><span class="params">()</span></span>;          <span class="comment">//连接点类型  </span></span><br><span class="line">    <span class="function"><span class="keyword">int</span> <span class="title">getId</span><span class="params">()</span></span>;               <span class="comment">//唯一标识  </span></span><br><span class="line"><span class="function">String <span class="title">toString</span><span class="params">()</span></span>;         <span class="comment">//连接点所在位置的相关信息  </span></span><br><span class="line">    <span class="function">String <span class="title">toShortString</span><span class="params">()</span></span>;     <span class="comment">//连接点所在位置的简短相关信息  </span></span><br><span class="line">    <span class="function">String <span class="title">toLongString</span><span class="params">()</span></span>;     <span class="comment">//连接点所在位置的全部相关信息  </span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="例子：防止onclick多次点击"><a href="#例子：防止onclick多次点击" class="headerlink" title="例子：防止onclick多次点击"></a>例子：防止onclick多次点击</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> android.os.SystemClock;</span><br><span class="line"><span class="keyword">import</span> android.util.Log;</span><br><span class="line"><span class="keyword">import</span> android.view.View;</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.JoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.ProceedingJoinPoint;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Around;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Aspect;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Before;</span><br><span class="line"><span class="keyword">import</span> org.aspectj.lang.annotation.Pointcut;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 点击事件的切入</span></span><br><span class="line"><span class="comment"> * Created by Extends on 2018/5/4/004.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Aspect</span></span><br><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">ClickAspect</span> </span>&#123;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> String TAG=<span class="string">"ClickAspect"</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> MIN_CLICK_DELAY_TIME = <span class="number">600</span>;</span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">int</span> TIME_TAG = R.id.click_time;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//是否允许快速点击</span></span><br><span class="line">    <span class="keyword">private</span> <span class="keyword">boolean</span> isFastClick = <span class="keyword">false</span>;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Before</span>(<span class="string">"@annotation(com.yuzhua.aspectj.FastClick)"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">judgeFastClick</span><span class="params">(JoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">        isFastClick = <span class="keyword">true</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="meta">@Around</span>(<span class="string">"execution(* android.view.View.OnClickListener.onClick(..))"</span>)</span><br><span class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">aroundClick</span><span class="params">(ProceedingJoinPoint joinPoint)</span> <span class="keyword">throws</span> Throwable</span>&#123;</span><br><span class="line">        <span class="comment">//判断是否需要快速点击</span></span><br><span class="line">        <span class="keyword">if</span>(isFastClick)&#123;</span><br><span class="line">            <span class="keyword">if</span>(AspectjConfig.isShowLog) System.out.println(<span class="string">"快速点击"</span>);</span><br><span class="line">            joinPoint.proceed();</span><br><span class="line">            isFastClick = <span class="keyword">false</span>;</span><br><span class="line">            <span class="keyword">return</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        View view=<span class="keyword">null</span>;</span><br><span class="line">        <span class="keyword">for</span> (Object arg: joinPoint.getArgs()) &#123;</span><br><span class="line">            <span class="keyword">if</span> (arg <span class="keyword">instanceof</span> View) &#123;</span><br><span class="line">                view= ((View) arg);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">if</span> (view!=<span class="keyword">null</span>)&#123;</span><br><span class="line">            Object tag=view.getTag(TIME_TAG);</span><br><span class="line">            <span class="keyword">long</span> lastClickTime= (tag!=<span class="keyword">null</span>)? (<span class="keyword">long</span>) tag :<span class="number">0</span>;</span><br><span class="line">            <span class="keyword">long</span> currentTime = SystemClock.uptimeMillis();</span><br><span class="line">            <span class="keyword">if</span> (currentTime - lastClickTime &gt; MIN_CLICK_DELAY_TIME) &#123;<span class="comment">//过滤掉600毫秒内的连续点击</span></span><br><span class="line">                view.setTag(TIME_TAG, currentTime);</span><br><span class="line">                <span class="keyword">if</span>(AspectjConfig.isShowLog) System.out.println(<span class="string">"慢速点击"</span>);</span><br><span class="line">                joinPoint.proceed();<span class="comment">//执行原方法</span></span><br><span class="line">            &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">                <span class="keyword">if</span>(AspectjConfig.isShowLog) System.out.println(<span class="string">"过滤点击"</span>);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="FastClick注解"><a href="#FastClick注解" class="headerlink" title="FastClick注解"></a>FastClick注解</h3><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> java.lang.annotation.ElementType;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Retention;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.RetentionPolicy;</span><br><span class="line"><span class="keyword">import</span> java.lang.annotation.Target;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 允许快速点击，即不做拦截</span></span><br><span class="line"><span class="comment"> * Created by Extends on 2018/5/4/004.</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="meta">@Retention</span>(RetentionPolicy.CLASS)</span><br><span class="line"><span class="meta">@Target</span>(ElementType.METHOD)</span><br><span class="line"><span class="keyword">public</span> <span class="meta">@interface</span> FastClick&#123;&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用总结"><a href="#使用总结" class="headerlink" title="使用总结"></a>使用总结</h2><ol>
+<li>不支持<em>lambda</em>表达式的切入</li>
+<li>AspectJ切入方法最好使用java写，用kotlin还是有时候会遇到问题</li>
+<li>修改过AspectJ切入方法后经常会build失败，需要clean一下（clean有时也会失败，不用管）再build</li>
+<li>在老项目里接入AspectJX老是遇到莫名奇妙的问题:<ol>
+<li>切入无效</li>
+<li>build失败，clean也无用</li>
+<li>打开app时报java.lang.ClassNotFoundException: Didn’t find class “xxx” on path: DexPathList[[zip file “/data/app/xxx.apk”],nativeLibraryDirectories=[/data/app-lib/xxx, /vendor/lib, /data/datalib, /system/lib]]</li>
+</ol>
+</li>
+<li>在新项目里接入时暂时没有发现这些问题</li>
+</ol>
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+    <div>
+      
+        
+
+      
+    </div>
+
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Android/" rel="tag"># Android</a>
+          
+            <a href="/tags/AOP/" rel="tag"># AOP</a>
+          
+            <a href="/tags/Aspectj/" rel="tag"># Aspectj</a>
+          
+        </div>
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2018/03/17/DividerItemDecoration的实现/" rel="next" title="DividerItemDecoration的实现">
+                <i class="fa fa-chevron-left"></i> DividerItemDecoration的实现
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <div class="ds-share flat" data-thread-key="2018/05/04/AspectJX-的使用/"
+     data-title="AspectJX 的使用"
+     data-content=""
+     data-url="https://lixiaoguo.github.io/2018/05/04/AspectJX-的使用/">
+  <div class="ds-share-inline">
+    <ul  class="ds-share-icons-16">
+
+      <li data-toggle="ds-share-icons-more"><a class="ds-more" href="javascript:void(0);">分享到：</a></li>
+      <li><a class="ds-weibo" href="javascript:void(0);" data-service="weibo">微博</a></li>
+      <li><a class="ds-qzone" href="javascript:void(0);" data-service="qzone">QQ空间</a></li>
+      <li><a class="ds-qqt" href="javascript:void(0);" data-service="qqt">腾讯微博</a></li>
+      <li><a class="ds-wechat" href="javascript:void(0);" data-service="wechat">微信</a></li>
+
+    </ul>
+    <div class="ds-share-icons-more">
+    </div>
+  </div>
+</div>
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+  <p>热评文章</p>
+  <div class="ds-top-threads" data-range="weekly" data-num-items="4"></div>
+
+
+          
+  <div class="comments" id="comments">
+    
+      <div class="ds-thread" data-thread-key="2018/05/04/AspectJX-的使用/"
+           data-title="AspectJX 的使用" data-url="https://lixiaoguo.github.io/2018/05/04/AspectJX-的使用/">
+      </div>
+    
+  </div>
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap" >
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+          <img class="site-author-image" itemprop="image"
+               src="http://q.qlogo.cn/qqapp/1105879324/78D3D4AAF54CF2EA982CC63D8BE5E658/40"
+               alt="Extends" />
+          <p class="site-author-name" itemprop="name">Extends</p>
+          <p class="site-description motion-element" itemprop="description">独守朝阳起，静待明月归</p>
+        </div>
+        <nav class="site-state motion-element">
+        
+          
+            <div class="site-state-item site-state-posts">
+              <a href="/archives">
+                <span class="site-state-item-count">16</span>
+                <span class="site-state-item-name">日志</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-categories">
+              <a href="/categories">
+                <span class="site-state-item-count">8</span>
+                <span class="site-state-item-name">分类</span>
+              </a>
+            </div>
+          
+
+          
+            <div class="site-state-item site-state-tags">
+              <a href="/tags">
+                <span class="site-state-item-count">29</span>
+                <span class="site-state-item-name">标签</span>
+              </a>
+            </div>
+          
+
+        </nav>
+
+        
+
+        <div class="links-of-author motion-element">
+          
+        </div>
+
+        
+        
+
+        
+        
+
+        
+
+
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#如何使用"><span class="nav-number">1.</span> <span class="nav-text">如何使用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#常见问题"><span class="nav-number">2.</span> <span class="nav-text">常见问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#匹配表达式"><span class="nav-number">3.</span> <span class="nav-text">匹配表达式</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#切入点组合方式"><span class="nav-number">3.1.</span> <span class="nav-text">切入点组合方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#execution"><span class="nav-number">3.2.</span> <span class="nav-text">execution</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#within"><span class="nav-number">3.3.</span> <span class="nav-text">within</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#this"><span class="nav-number">3.4.</span> <span class="nav-text">this</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#target"><span class="nav-number">3.5.</span> <span class="nav-text">target</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#args"><span class="nav-number">3.6.</span> <span class="nav-text">args</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#within-1"><span class="nav-number">3.7.</span> <span class="nav-text">@within</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#target-1"><span class="nav-number">3.8.</span> <span class="nav-text">@target</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#args-1"><span class="nav-number">3.9.</span> <span class="nav-text">@args</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#annotation"><span class="nav-number">3.10.</span> <span class="nav-text">@annotation</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#reference-pointcut-引用其他命名切入点"><span class="nav-number">3.11.</span> <span class="nav-text">reference pointcut 引用其他命名切入点</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通知参数"><span class="nav-number">3.12.</span> <span class="nav-text">通知参数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#例子：防止onclick多次点击"><span class="nav-number">4.</span> <span class="nav-text">例子：防止onclick多次点击</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#FastClick注解"><span class="nav-number">4.1.</span> <span class="nav-text">FastClick注解</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#使用总结"><span class="nav-number">5.</span> <span class="nav-text">使用总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright" >
+  
+  &copy; 
+  <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Extends</span>
+</div>
+
+
+<div class="powered-by">
+  由 <a class="theme-link" href="https://hexo.io">Hexo</a> 强力驱动
+</div>
+
+<div class="theme-info">
+  主题 -
+  <a class="theme-link" href="https://github.com/iissnan/hexo-theme-next">
+    NexT.Mist
+  </a>
+</div>
+
+
+        
+
+        
+      </div>
+    </footer>
+
+    <div class="back-to-top">
+      <i class="fa fa-arrow-up"></i>
+    </div>
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.0"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.0"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.0"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.0"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.0"></script>
+
+
+
+  
+
+  
+    
+  
+
+  <script type="text/javascript">
+    var duoshuoQuery = {short_name:"lixiaoguo"};
+    (function() {
+      var ds = document.createElement('script');
+      ds.type = 'text/javascript';ds.async = true;
+      ds.id = 'duoshuo-script';
+      ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+      ds.charset = 'UTF-8';
+      (document.getElementsByTagName('head')[0]
+      || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+  </script>
+
+  
+    
+      
+      <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+      <script src="/js/src/hook-duoshuo.js?v=5.1.0"></script>
+    
+    
+    <script src="/lib/ua-parser-js/dist/ua-parser.min.js?v=0.7.9"></script>
+    <script src="/js/src/hook-duoshuo.js"></script>
+  
+
+
+
+
+
+
+
+
+
+
+  
+  
+
+  
+  
+
+
+  
+
+  
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.1.js"></script>
+  <script>AV.initialize("cK1643tmnePSdTCiRLmkltfb-gzGzoHsz", "efY321nF5uGJcQknvXtE7QLK");</script>
+  <script>
+    function showTime(Counter) {
+      var query = new AV.Query(Counter);
+      var entries = [];
+      var $visitors = $(".leancloud_visitors");
+
+      $visitors.each(function () {
+        entries.push( $(this).attr("id").trim() );
+      });
+
+      query.containedIn('url', entries);
+      query.find()
+        .done(function (results) {
+          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
+
+          if (results.length === 0) {
+            $visitors.find(COUNT_CONTAINER_REF).text(0);
+            return;
+          }
+
+          for (var i = 0; i < results.length; i++) {
+            var item = results[i];
+            var url = item.get('url');
+            var time = item.get('time');
+            var element = document.getElementById(url);
+
+            $(element).find(COUNT_CONTAINER_REF).text(time);
+          }
+          for(var i = 0; i < entries.length; i++) {
+            var url = entries[i];
+            var element = document.getElementById(url);
+            var countSpan = $(element).find(COUNT_CONTAINER_REF);
+            if( countSpan.text() == '') {
+              countSpan.text(0);
+            }
+          }
+        })
+        .fail(function (object, error) {
+          console.log("Error: " + error.code + " " + error.message);
+        });
+    }
+
+    function addCount(Counter) {
+      var $visitors = $(".leancloud_visitors");
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
+      var query = new AV.Query(Counter);
+
+      query.equalTo("url", url);
+      query.find({
+        success: function(results) {
+          if (results.length > 0) {
+            var counter = results[0];
+            counter.fetchWhenSave(true);
+            counter.increment("time");
+            counter.save(null, {
+              success: function(counter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.get('time'));
+              },
+              error: function(counter, error) {
+                console.log('Failed to save Visitor num, with error message: ' + error.message);
+              }
+            });
+          } else {
+            var newcounter = new Counter();
+            /* Set ACL */
+            var acl = new AV.ACL();
+            acl.setPublicReadAccess(true);
+            acl.setPublicWriteAccess(true);
+            newcounter.setACL(acl);
+            /* End Set ACL */
+            newcounter.set("title", title);
+            newcounter.set("url", url);
+            newcounter.set("time", 1);
+            newcounter.save(null, {
+              success: function(newcounter) {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
+              },
+              error: function(newcounter, error) {
+                console.log('Failed to create');
+              }
+            });
+          }
+        },
+        error: function(error) {
+          console.log('Error:' + error.code + " " + error.message);
+        }
+      });
+    }
+
+    $(function() {
+      var Counter = AV.Object.extend("Counter");
+      if ($('.leancloud_visitors').length == 1) {
+        addCount(Counter);
+      } else if ($('.post-title-link').length > 1) {
+        showTime(Counter);
+      }
+    });
+  </script>
+
+
+
+  
+
+  
+
+
+</body>
+</html>
