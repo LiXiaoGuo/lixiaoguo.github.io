@@ -68,7 +68,7 @@
 <link href="/css/main.css?v=5.1.0" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Android,MultiDex," />
+  <meta name="keywords" content="Android," />
 
 
 
@@ -84,18 +84,18 @@
 
 
 
-<meta name="description" content="前言 辛苦了一阵，博客也终于搭好了，现在我也要学着写写博客，一来给自己以后查找资料方便；二来也练一练文笔，现在一打字、一拿笔，都不知道说些什么了。 正文 昨天把一个功能导进一个老项目中，发现两个项目很多东西都不一样，比如网络库、消息总线、图片加载库等等，很多东西能重用的我就重用了，但还是有很多是新加的，瞎忙了两个小时，把报错的都修改了。但是当我满怀希望的时候，发现gradle build报错：">
-<meta name="keywords" content="Android,MultiDex">
+<meta name="description" content="1. Java基础1. 基本数据类型####2. 集合 3. 基本数据结构4. 反射5. 动态代理6. NIO7. GC8. 多线程9. 网络协议2. Android基础1. Activity2. Fragment3. Service4. ContentProvider5. BroadcastReceiver6. Context7. Window8. Dialog9. PopupWindow3.A">
+<meta name="keywords" content="Android">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Android 分Dex (MultiDex)">
-<meta property="og:url" content="https://lixiaoguo.github.io/2016/12/29/Android-分Dex-MultiDex/index.html">
+<meta property="og:title" content="Android知识点整理">
+<meta property="og:url" content="https://lixiaoguo.github.io/2020/01/03/Android知识点整理/index.html">
 <meta property="og:site_name" content="李小果の博客">
-<meta property="og:description" content="前言 辛苦了一阵，博客也终于搭好了，现在我也要学着写写博客，一来给自己以后查找资料方便；二来也练一练文笔，现在一打字、一拿笔，都不知道说些什么了。 正文 昨天把一个功能导进一个老项目中，发现两个项目很多东西都不一样，比如网络库、消息总线、图片加载库等等，很多东西能重用的我就重用了，但还是有很多是新加的，瞎忙了两个小时，把报错的都修改了。但是当我满怀希望的时候，发现gradle build报错：">
+<meta property="og:description" content="1. Java基础1. 基本数据类型####2. 集合 3. 基本数据结构4. 反射5. 动态代理6. NIO7. GC8. 多线程9. 网络协议2. Android基础1. Activity2. Fragment3. Service4. ContentProvider5. BroadcastReceiver6. Context7. Window8. Dialog9. PopupWindow3.A">
 <meta property="og:locale" content="zh-Hans">
-<meta property="og:updated_time" content="2018-03-02T09:54:33.687Z">
+<meta property="og:updated_time" content="2020-01-03T03:24:14.556Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Android 分Dex (MultiDex)">
-<meta name="twitter:description" content="前言 辛苦了一阵，博客也终于搭好了，现在我也要学着写写博客，一来给自己以后查找资料方便；二来也练一练文笔，现在一打字、一拿笔，都不知道说些什么了。 正文 昨天把一个功能导进一个老项目中，发现两个项目很多东西都不一样，比如网络库、消息总线、图片加载库等等，很多东西能重用的我就重用了，但还是有很多是新加的，瞎忙了两个小时，把报错的都修改了。但是当我满怀希望的时候，发现gradle build报错：">
+<meta name="twitter:title" content="Android知识点整理">
+<meta name="twitter:description" content="1. Java基础1. 基本数据类型####2. 集合 3. 基本数据结构4. 反射5. 动态代理6. NIO7. GC8. 多线程9. 网络协议2. Android基础1. Activity2. Fragment3. Service4. ContentProvider5. BroadcastReceiver6. Context7. Window8. Dialog9. PopupWindow3.A">
 
 
 
@@ -123,13 +123,13 @@
 
 
 
-  <link rel="canonical" href="https://lixiaoguo.github.io/2016/12/29/Android-分Dex-MultiDex/"/>
+  <link rel="canonical" href="https://lixiaoguo.github.io/2020/01/03/Android知识点整理/"/>
 
 
 
 
 
-  <title> Android 分Dex (MultiDex) | 李小果の博客 </title>
+  <title> Android知识点整理 | 李小果の博客 </title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -282,7 +282,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-  <link itemprop="mainEntityOfPage" href="https://lixiaoguo.github.io/2016/12/29/Android-分Dex-MultiDex/">
+  <link itemprop="mainEntityOfPage" href="https://lixiaoguo.github.io/2020/01/03/Android知识点整理/">
 
   <span style="display:none" itemprop="author" itemscope itemtype="http://schema.org/Person">
     <meta itemprop="name" content="Extends">
@@ -306,7 +306,7 @@
             
             
               
-                Android 分Dex (MultiDex)
+                Android知识点整理
               
             
           </h1>
@@ -321,8 +321,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2016-12-29T16:37:33+08:00">
-                2016-12-29
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2020-01-03T10:44:15+08:00">
+                2020-01-03
               </time>
             
 
@@ -332,28 +332,6 @@
           </span>
 
           
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
 
           
             
@@ -362,8 +340,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2016/12/29/Android-分Dex-MultiDex/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2016/12/29/Android-分Dex-MultiDex/" itemprop="commentCount"></span>
+                <a href="/2020/01/03/Android知识点整理/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2020/01/03/Android知识点整理/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -373,7 +351,7 @@
 
           
           
-             <span id="/2016/12/29/Android-分Dex-MultiDex/" class="leancloud_visitors" data-flag-title="Android 分Dex (MultiDex)">
+             <span id="/2020/01/03/Android知识点整理/" class="leancloud_visitors" data-flag-title="Android知识点整理">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -400,45 +378,11 @@
       
 
       
-        <h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p> 辛苦了一阵，博客也终于搭好了，现在我也要学着写写博客，一来给自己以后查找资料方便；二来也练一练文笔，现在一打字、一拿笔，都不知道说些什么了。</p>
-<h2 id="正文"><a href="#正文" class="headerlink" title="正文"></a>正文</h2><p> 昨天把一个功能导进一个老项目中，发现两个项目很多东西都不一样，比如网络库、消息总线、图片加载库等等，很多东西能重用的我就重用了，但还是有很多是新加的，瞎忙了两个小时，把报错的都修改了。但是当我满怀希望的时候，发现gradle build报错：<br><a id="more"></a><br><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Unable to execute dex: method ID not in [<span class="number">0</span>, <span class="number">0xffff</span>]: <span class="number">65536</span></span><br><span class="line">Conversion to Dalvik format failed: Unable to execute dex: method ID not in [<span class="number">0</span>, <span class="number">0xffff</span>]: <span class="number">65536</span></span><br></pre></td></tr></table></figure></p>
-<p> 方法数超标了，在ART以前的Android系统中，Dex文件对于方法索引是用一个short类型的数据来存放的。而short的最大值是65535，因此当项目足够大包含方法数目足够多超过了65535(包括引用的外部Lib里面的所有方法)，当运行App就会得到这个错误提示。</p>
-<h2 id="解决方案"><a href="#解决方案" class="headerlink" title="解决方案"></a>解决方案</h2><ol>
-<li><p>修改app/build.gradle<br>​<br>在defaultConfig里添加</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">multiDexEnabled</span> <span class="literal">true</span></span><br></pre></td></tr></table></figure>
-<p>在defaultConfig同级添加</p>
-<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">dexOptions</span> &#123;</span><br><span class="line">		<span class="attribute">preDexLibraries</span> = <span class="literal">false</span></span><br><span class="line">		javaMaxHeapSize <span class="string">"2g"</span></span><br><span class="line">	&#125;</span><br></pre></td></tr></table></figure>
-<p>在dependencies里添加</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">compile</span> <span class="string">'com.android.support:multidex:1.0.1'</span></span><br></pre></td></tr></table></figure>
-<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><p>这一步可能会遇到两个问题</p>
-<ul>
-<li><p>gradle版本可能低了，在项目的build.gradle里面把版本提高，比如我这样：</p>
-<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">classpath</span> <span class="string">'com.android.tools.build:gradle:2.1.0'</span></span><br></pre></td></tr></table></figure>
-</li>
-<li><p>在获取multidex的时候可能一直卡在这个地方，原因是被墙了，请自备梯子。</p>
-</li>
-</ul>
-</li>
-<li><p>修改Application</p>
-<p>如果没有自定义Application就直接在AndroidManifest.xml中修改：</p>
-<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="php"><span class="meta">&lt;?</span>xml version=<span class="string">"1.0"</span> encoding=<span class="string">"utf-8"</span><span class="meta">?&gt;</span></span></span><br><span class="line"><span class="tag">&lt;<span class="name">manifest</span> <span class="attr">xmlns:android</span>=<span class="string">"http://schemas.android.com/apk/res/android"</span></span></span><br><span class="line"><span class="tag">	<span class="attr">package</span>=<span class="string">"com.example.android.multidex.myapplication"</span>&gt;</span></span><br><span class="line">	<span class="tag">&lt;<span class="name">application</span></span></span><br><span class="line"><span class="tag">		<span class="attr">...</span></span></span><br><span class="line"><span class="tag">		<span class="attr">android:name</span>=<span class="string">"android.support.multidex.MultiDexApplication"</span>&gt;</span></span><br><span class="line">		...</span><br><span class="line">	<span class="tag">&lt;/<span class="name">application</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">manifest</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>如果有自己自定义Application，就去修改自己的Application</p>
-<ul>
-<li>要么重写attachBaseContext方法：<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"> <span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloMultiDexApplication</span> <span class="keyword">extends</span> <span class="title">Application</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onCreate();</span><br><span class="line">	&#125;</span><br><span class="line"></span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">attachBaseContext</span><span class="params">(Context base)</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.attachBaseContext(base);</span><br><span class="line">		MultiDex.install(<span class="keyword">this</span>);</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-</li>
-</ol>
-<ul>
-<li>要么继承MultiDexApplication<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">HelloMultiDexApplication</span> <span class="keyword">extends</span> <span class="title">MultiDexApplication</span> </span>&#123;</span><br><span class="line">	<span class="meta">@Override</span></span><br><span class="line">	<span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onCreate</span><span class="params">()</span> </span>&#123;</span><br><span class="line">		<span class="keyword">super</span>.onCreate();</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-</ul>
-<h2 id="有问题反馈"><a href="#有问题反馈" class="headerlink" title="有问题反馈"></a>有问题反馈</h2><p>在使用中有任何问题，欢迎反馈给我，可以用以下联系方式跟我交流</p>
-<ul>
-<li>Email: <a href="mailto:2563892038@qq.com" target="_blank" rel="noopener">2563892038@qq.com</a></li>
-<li>Github: <a href="https://github.com/LiXiaoGuo" target="_blank" rel="noopener">LiXiaoGuo</a></li>
-</ul>
-
+        <h3 id="1-Java基础"><a href="#1-Java基础" class="headerlink" title="1. Java基础"></a>1. Java基础</h3><h4 id="1-基本数据类型"><a href="#1-基本数据类型" class="headerlink" title="1. 基本数据类型"></a>1. 基本数据类型</h4><p>####2. 集合</p>
+<h4 id="3-基本数据结构"><a href="#3-基本数据结构" class="headerlink" title="3. 基本数据结构"></a>3. 基本数据结构</h4><h4 id="4-反射"><a href="#4-反射" class="headerlink" title="4. 反射"></a>4. 反射</h4><h4 id="5-动态代理"><a href="#5-动态代理" class="headerlink" title="5. 动态代理"></a>5. 动态代理</h4><h4 id="6-NIO"><a href="#6-NIO" class="headerlink" title="6. NIO"></a>6. NIO</h4><h4 id="7-GC"><a href="#7-GC" class="headerlink" title="7. GC"></a>7. GC</h4><h4 id="8-多线程"><a href="#8-多线程" class="headerlink" title="8. 多线程"></a>8. 多线程</h4><h4 id="9-网络协议"><a href="#9-网络协议" class="headerlink" title="9. 网络协议"></a>9. 网络协议</h4><h3 id="2-Android基础"><a href="#2-Android基础" class="headerlink" title="2. Android基础"></a>2. Android基础</h3><h4 id="1-Activity"><a href="#1-Activity" class="headerlink" title="1. Activity"></a>1. Activity</h4><h4 id="2-Fragment"><a href="#2-Fragment" class="headerlink" title="2. Fragment"></a>2. Fragment</h4><h4 id="3-Service"><a href="#3-Service" class="headerlink" title="3. Service"></a>3. Service</h4><h4 id="4-ContentProvider"><a href="#4-ContentProvider" class="headerlink" title="4. ContentProvider"></a>4. ContentProvider</h4><h4 id="5-BroadcastReceiver"><a href="#5-BroadcastReceiver" class="headerlink" title="5. BroadcastReceiver"></a>5. BroadcastReceiver</h4><h4 id="6-Context"><a href="#6-Context" class="headerlink" title="6. Context"></a>6. Context</h4><h4 id="7-Window"><a href="#7-Window" class="headerlink" title="7. Window"></a>7. Window</h4><h4 id="8-Dialog"><a href="#8-Dialog" class="headerlink" title="8. Dialog"></a>8. Dialog</h4><h4 id="9-PopupWindow"><a href="#9-PopupWindow" class="headerlink" title="9. PopupWindow"></a>9. PopupWindow</h4><h3 id="3-Android基础服务"><a href="#3-Android基础服务" class="headerlink" title="3.Android基础服务"></a>3.Android基础服务</h3><h4 id="1-ActivityManagerService"><a href="#1-ActivityManagerService" class="headerlink" title="1. ActivityManagerService"></a>1. ActivityManagerService</h4><h4 id="2-WindowManager"><a href="#2-WindowManager" class="headerlink" title="2. WindowManager"></a>2. WindowManager</h4><h4 id="3-WindowManagerService"><a href="#3-WindowManagerService" class="headerlink" title="3. WindowManagerService"></a>3. WindowManagerService</h4><h4 id="4-ServiceManager"><a href="#4-ServiceManager" class="headerlink" title="4. ServiceManager"></a>4. ServiceManager</h4><h4 id="5-Android系统启动过程"><a href="#5-Android系统启动过程" class="headerlink" title="5. Android系统启动过程"></a>5. Android系统启动过程</h4><h4 id="6-APK安装过程"><a href="#6-APK安装过程" class="headerlink" title="6.APK安装过程"></a>6.APK安装过程</h4><h4 id="7-APP启动过程"><a href="#7-APP启动过程" class="headerlink" title="7. APP启动过程"></a>7. APP启动过程</h4><h4 id="8-WIFI"><a href="#8-WIFI" class="headerlink" title="8. WIFI"></a>8. WIFI</h4><h4 id="9-NFC"><a href="#9-NFC" class="headerlink" title="9. NFC"></a>9. NFC</h4><h4 id="10-蓝牙"><a href="#10-蓝牙" class="headerlink" title="10. 蓝牙"></a>10. 蓝牙</h4><h3 id="4-常见机制"><a href="#4-常见机制" class="headerlink" title="4. 常见机制"></a>4. 常见机制</h3><h4 id="1-线程通信"><a href="#1-线程通信" class="headerlink" title="1. 线程通信"></a>1. 线程通信</h4><h4 id="2-进程"><a href="#2-进程" class="headerlink" title="2. 进程"></a>2. 进程</h4><h4 id="3-View体系"><a href="#3-View体系" class="headerlink" title="3. View体系"></a>3. View体系</h4><h4 id="4-Android消息机制"><a href="#4-Android消息机制" class="headerlink" title="4. Android消息机制"></a>4. Android消息机制</h4><h4 id="5-本地存储"><a href="#5-本地存储" class="headerlink" title="5. 本地存储"></a>5. 本地存储</h4><h4 id="6-资源管理系统，资源加载机制"><a href="#6-资源管理系统，资源加载机制" class="headerlink" title="6. 资源管理系统，资源加载机制"></a>6. 资源管理系统，资源加载机制</h4><h3 id="5-Android进阶"><a href="#5-Android进阶" class="headerlink" title="5. Android进阶"></a>5. Android进阶</h3><p>####1.资源管理 </p>
+<h4 id="2-打包"><a href="#2-打包" class="headerlink" title="2. 打包"></a>2. 打包</h4><h4 id="3-AOP"><a href="#3-AOP" class="headerlink" title="3. AOP"></a>3. AOP</h4><h4 id="4-组件化"><a href="#4-组件化" class="headerlink" title="4. 组件化"></a>4. 组件化</h4><h4 id="5-消息推送-amp-保活"><a href="#5-消息推送-amp-保活" class="headerlink" title="5. 消息推送&amp;保活"></a>5. 消息推送&amp;保活</h4><p>####6. NDK </p>
+<h4 id="7-安全"><a href="#7-安全" class="headerlink" title="7. 安全"></a>7. 安全</h4><h4 id="8-多媒体"><a href="#8-多媒体" class="headerlink" title="8. 多媒体"></a>8. 多媒体</h4><h4 id="9-性能优化"><a href="#9-性能优化" class="headerlink" title="9. 性能优化"></a>9. 性能优化</h4><h4 id="10-持续继承"><a href="#10-持续继承" class="headerlink" title="10 .持续继承"></a>10 .持续继承</h4><p>####11. 动态化</p>
+<h3 id="6-架构能力"><a href="#6-架构能力" class="headerlink" title="6. 架构能力"></a>6. 架构能力</h3><h4 id="1-设计模式"><a href="#1-设计模式" class="headerlink" title="1. 设计模式"></a>1. 设计模式</h4><h4 id="2-架构模式"><a href="#2-架构模式" class="headerlink" title="2. 架构模式"></a>2. 架构模式</h4>
       
     </div>
 
@@ -463,8 +407,6 @@
           
             <a href="/tags/Android/" rel="tag"># Android</a>
           
-            <a href="/tags/MultiDex/" rel="tag"># MultiDex</a>
-          
         </div>
       
 
@@ -472,8 +414,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2016/12/27/test/" rel="next" title="test">
-                <i class="fa fa-chevron-left"></i> test
+              <a href="/2020/01/03/2020-01-20骑行规划/" rel="next" title="2020.01.20骑行规划">
+                <i class="fa fa-chevron-left"></i> 2020.01.20骑行规划
               </a>
             
           </div>
@@ -481,10 +423,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2016/12/30/小技巧-AS自动签名/" rel="prev" title="小技巧--AS自动签名">
-                小技巧--AS自动签名 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -499,10 +437,10 @@
 
     <div class="post-spread">
       
-        <div class="ds-share flat" data-thread-key="2016/12/29/Android-分Dex-MultiDex/"
-     data-title="Android 分Dex (MultiDex)"
+        <div class="ds-share flat" data-thread-key="2020/01/03/Android知识点整理/"
+     data-title="Android知识点整理"
      data-content=""
-     data-url="https://lixiaoguo.github.io/2016/12/29/Android-分Dex-MultiDex/">
+     data-url="https://lixiaoguo.github.io/2020/01/03/Android知识点整理/">
   <div class="ds-share-inline">
     <ul  class="ds-share-icons-16">
 
@@ -532,8 +470,8 @@
           
   <div class="comments" id="comments">
     
-      <div class="ds-thread" data-thread-key="2016/12/29/Android-分Dex-MultiDex/"
-           data-title="Android 分Dex (MultiDex)" data-url="https://lixiaoguo.github.io/2016/12/29/Android-分Dex-MultiDex/">
+      <div class="ds-thread" data-thread-key="2020/01/03/Android知识点整理/"
+           data-title="Android知识点整理" data-url="https://lixiaoguo.github.io/2020/01/03/Android知识点整理/">
       </div>
     
   </div>
@@ -633,7 +571,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#前言"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#正文"><span class="nav-number">2.</span> <span class="nav-text">正文</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#解决方案"><span class="nav-number">3.</span> <span class="nav-text">解决方案</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#注意"><span class="nav-number">3.1.</span> <span class="nav-text">注意</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#有问题反馈"><span class="nav-number">4.</span> <span class="nav-text">有问题反馈</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Java基础"><span class="nav-number">1.</span> <span class="nav-text">1. Java基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-基本数据类型"><span class="nav-number">1.1.</span> <span class="nav-text">1. 基本数据类型</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-基本数据结构"><span class="nav-number">1.2.</span> <span class="nav-text">3. 基本数据结构</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-反射"><span class="nav-number">1.3.</span> <span class="nav-text">4. 反射</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-动态代理"><span class="nav-number">1.4.</span> <span class="nav-text">5. 动态代理</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-NIO"><span class="nav-number">1.5.</span> <span class="nav-text">6. NIO</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-GC"><span class="nav-number">1.6.</span> <span class="nav-text">7. GC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-多线程"><span class="nav-number">1.7.</span> <span class="nav-text">8. 多线程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-网络协议"><span class="nav-number">1.8.</span> <span class="nav-text">9. 网络协议</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-Android基础"><span class="nav-number">2.</span> <span class="nav-text">2. Android基础</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-Activity"><span class="nav-number">2.1.</span> <span class="nav-text">1. Activity</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-Fragment"><span class="nav-number">2.2.</span> <span class="nav-text">2. Fragment</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-Service"><span class="nav-number">2.3.</span> <span class="nav-text">3. Service</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-ContentProvider"><span class="nav-number">2.4.</span> <span class="nav-text">4. ContentProvider</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-BroadcastReceiver"><span class="nav-number">2.5.</span> <span class="nav-text">5. BroadcastReceiver</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-Context"><span class="nav-number">2.6.</span> <span class="nav-text">6. Context</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-Window"><span class="nav-number">2.7.</span> <span class="nav-text">7. Window</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-Dialog"><span class="nav-number">2.8.</span> <span class="nav-text">8. Dialog</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-PopupWindow"><span class="nav-number">2.9.</span> <span class="nav-text">9. PopupWindow</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-Android基础服务"><span class="nav-number">3.</span> <span class="nav-text">3.Android基础服务</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-ActivityManagerService"><span class="nav-number">3.1.</span> <span class="nav-text">1. ActivityManagerService</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-WindowManager"><span class="nav-number">3.2.</span> <span class="nav-text">2. WindowManager</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-WindowManagerService"><span class="nav-number">3.3.</span> <span class="nav-text">3. WindowManagerService</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-ServiceManager"><span class="nav-number">3.4.</span> <span class="nav-text">4. ServiceManager</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-Android系统启动过程"><span class="nav-number">3.5.</span> <span class="nav-text">5. Android系统启动过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-APK安装过程"><span class="nav-number">3.6.</span> <span class="nav-text">6.APK安装过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-APP启动过程"><span class="nav-number">3.7.</span> <span class="nav-text">7. APP启动过程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-WIFI"><span class="nav-number">3.8.</span> <span class="nav-text">8. WIFI</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-NFC"><span class="nav-number">3.9.</span> <span class="nav-text">9. NFC</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-蓝牙"><span class="nav-number">3.10.</span> <span class="nav-text">10. 蓝牙</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-常见机制"><span class="nav-number">4.</span> <span class="nav-text">4. 常见机制</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-线程通信"><span class="nav-number">4.1.</span> <span class="nav-text">1. 线程通信</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-进程"><span class="nav-number">4.2.</span> <span class="nav-text">2. 进程</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-View体系"><span class="nav-number">4.3.</span> <span class="nav-text">3. View体系</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-Android消息机制"><span class="nav-number">4.4.</span> <span class="nav-text">4. Android消息机制</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-本地存储"><span class="nav-number">4.5.</span> <span class="nav-text">5. 本地存储</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#6-资源管理系统，资源加载机制"><span class="nav-number">4.6.</span> <span class="nav-text">6. 资源管理系统，资源加载机制</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-Android进阶"><span class="nav-number">5.</span> <span class="nav-text">5. Android进阶</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#2-打包"><span class="nav-number">5.1.</span> <span class="nav-text">2. 打包</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#3-AOP"><span class="nav-number">5.2.</span> <span class="nav-text">3. AOP</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#4-组件化"><span class="nav-number">5.3.</span> <span class="nav-text">4. 组件化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#5-消息推送-amp-保活"><span class="nav-number">5.4.</span> <span class="nav-text">5. 消息推送&amp;保活</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#7-安全"><span class="nav-number">5.5.</span> <span class="nav-text">7. 安全</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#8-多媒体"><span class="nav-number">5.6.</span> <span class="nav-text">8. 多媒体</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#9-性能优化"><span class="nav-number">5.7.</span> <span class="nav-text">9. 性能优化</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#10-持续继承"><span class="nav-number">5.8.</span> <span class="nav-text">10 .持续继承</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-架构能力"><span class="nav-number">6.</span> <span class="nav-text">6. 架构能力</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-设计模式"><span class="nav-number">6.1.</span> <span class="nav-text">1. 设计模式</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#2-架构模式"><span class="nav-number">6.2.</span> <span class="nav-text">2. 架构模式</span></a></li></ol></li></ol></div>
             
 
           </div>
